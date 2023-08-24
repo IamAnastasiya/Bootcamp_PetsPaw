@@ -1,0 +1,24 @@
+@import '../../styles/variables';
+
+
+.white {
+    color: $bright-colar;
+    text-align: center;
+    padding: 10px 0;
+    background-color: #FFF;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 2px;
+    border-radius: 10px;
+}
+
+
+.white:hover {
+    background-color: $pale-coral;
+}
+
+.white:active {
+    background-color: $bright-colar;
+    color: #FFFFFF;
+}

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styles from "./MainNavigation.module.scss";
+import BaseButton from "../ui/BaseButton";
 
 const MainNavigation = () => {
     return (
@@ -11,29 +12,23 @@ const MainNavigation = () => {
             <p className={styles["nav-text"]}>Lets start using The Cat API</p>
 
             <ul className={styles["nav-list"]}>
-                <li>
-                    <Link href="/voting" className={styles.voting}>
+                <li className={styles["list-item"]}>
+                    <Link href="/voting" className={`${styles["list-img"]} ${styles.voting}`}>
                         <img src="/images/vote-table.png" alt="go to voting page" width="100" height="124"/>
                     </Link>
+                    <BaseButton link={true} href="/voting" mode="white">VOTING</BaseButton>
                 </li>
-                <li>
-                    <Link href="/breeds" className={styles.breeds}>
+                <li className={styles["list-item"]}>
+                    <Link href="/breeds" className={`${styles["list-img"]} ${styles.breeds}`}>
                         <img src="/images/pet-breeds.png" alt="go to breeds page"  width="117" height="163"/>
                     </Link>
+                    <BaseButton link={true} href="/voting" mode="white">BREEDS</BaseButton>
                 </li>
-                <li>
-                    <Link href="/gallery" className={styles.gallery}>
+                <li className={styles["list-item"]}>
+                    <Link href="/gallery" className={`${styles["list-img"]} ${styles.gallery}`}>
                         <img src="/images/images-search.png" alt="go to search page"  width="112" height="190"/>
                     </Link>
-                </li>
-                <li>
-                    <Link href="/voting" className={styles['link-name']}>VOTING</Link>
-                </li>
-                <li>
-                    <Link href="/breeds"  className={styles['link-name']}>BREEDS</Link>
-                </li>
-                <li>
-                    <Link href="/gallery"  className={styles['link-name']}>GALLERY</Link>
+                    <BaseButton link={true} href="/voting" mode="white">GALLERY</BaseButton>
                 </li>
             </ul>
         </div>
