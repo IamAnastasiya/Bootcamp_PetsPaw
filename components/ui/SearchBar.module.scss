@@ -1,0 +1,61 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.search-wrapper {
+    border-radius: 20px;
+    height: 60px;
+    box-sizing: border-box;
+    border: 2px solid #FFF;
+    background: #FFF;
+    display: flex;
+    flex-basis: 470px;
+    justify-content: space-between;
+    padding: 10px 10px 10px 20px;
+}
+
+.search-wrapper:hover {
+    border: 2px solid $pale-coral;
+}
+
+.search-wrapper:active {
+    border: 2px solid $bright-colar;
+}
+
+.search-input {
+    border: none;
+    padding: 0;
+    max-width: 380px;
+    width: 100%;
+    @include size-color-weight-height(20px,  $dark-grey, 400, 30px);
+}
+
+.search-input:focus {
+    outline: none;
+}
+
+.search-input::placeholder {
+    @include size-color-weight-height(20px,  $dark-grey, 400, 30px);
+}
+
+.search-btn {
+    background-color: $pale-coral;
+    @include button-40();
+    background-image: url('/icons/search.svg');
+}
+
+.search-btn:hover {
+    background-color: $bright-colar;
+    background-image: url('/icons/search-white.svg');
+}
+
+@media (max-width: 768px) {
+    .search-wrapper {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 360px) {
+    .search-input::placeholder {
+        @include size-color-weight-height(16px,  $dark-grey, 400, 22px);
+    }
+}

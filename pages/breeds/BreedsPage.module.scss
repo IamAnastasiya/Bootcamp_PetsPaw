@@ -1,0 +1,103 @@
+@import '../../styles/mixins';
+@import '../../styles/variables';
+
+// .wrapper {
+//     @include page-layout;
+// }
+
+// .left-section {
+//     @include sticky-section;
+// }
+
+// .header {
+//     @include logo-header;
+// }
+
+.breeds-container {
+    @include main-section;
+}
+
+.title-wrapper {
+    @include title-display-gap-bottom(flex, 10px, 20px);
+}
+
+.section-title {
+    background-color: $bright-colar;
+    @include size-color-weight-height(20px, #FFF, 500, 30px);
+    letter-spacing: 2px;
+    border-radius: 10px;
+    padding: 5px 30px;
+}
+
+.title-wrapper div:nth-child(4) {
+    display: flex;
+    gap: 10px;
+    max-width: 201px;
+    width: 100%;
+}
+
+.image-wrapper {
+    position: relative;
+    margin-bottom: 52px;
+}
+
+.filter-ZA {
+    @include button-40;
+    background-image: url('/icons/filterZA.svg');
+    background-color: $background-grey;
+    box-sizing: border-box;
+    border: 2px solid $background-grey;
+    flex-shrink: 0;
+}
+
+.filter-AZ {
+    @include button-40;
+    background-image: url('/icons/filterAZ.svg');
+    background-color: $background-grey;
+    box-sizing: border-box;
+    border: 2px solid $background-grey;
+    flex-shrink: 0;
+}
+
+.filter-ZA:hover {
+    background-image: url('/icons/filterZA-colar.svg');
+    border: 2px solid $pale-coral;
+}
+
+.filter-AZ:hover {
+    background-image: url('/icons/filterAZ-colar.svg');
+    border: 2px solid $pale-coral;
+}
+
+@media (max-width: 1200px) {
+    // .wrapper {
+    //     justify-content: center;
+    // }
+
+    // .left-section {
+    //     display: none;
+    // }
+
+    .image-wrapper img {
+        width: 100%;
+    }
+}
+
+@media (max-width: 700px) {
+    .title-wrapper {
+        flex-wrap: wrap;
+        gap: 10px; 
+    } 
+
+    .title-wrapper div:nth-child(4)   {
+        max-width: 600px;
+    }
+}
+
+// @media (max-width: 375px) {
+//     .wrapper {
+//         padding: 20px;
+//     }
+// }
+
+

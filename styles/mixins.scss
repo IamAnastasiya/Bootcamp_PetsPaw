@@ -1,5 +1,95 @@
+@import './variables.scss';
+
 @mixin flex-centered() {
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+}
+
+@mixin page-layout() {
+    display: flex;
+    padding: 30px;
+    justify-content: space-between;
+}
+
+
+@mixin sticky-section() {
+    position: sticky;
+    top: 30px;
+    margin-right: 65px;
+    flex-shrink: 1;
+    flex-basis: 563px;
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    align-items: flex-end;
+}
+
+@mixin logo-header() {
+    display: flex;
+    max-width: 446px;
+    width: 100%;
+}
+
+@mixin main-section() {
+    background-color: #FFFFFF;
+    padding: 20px;
+    max-width: 680px;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 20px;
+}
+
+@mixin action-icon-80() {
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 2px solid #FFF;
+    width: 80px;
+    height: 80px;
+    bottom: 40px;
+    cursor: pointer;
+}
+
+@mixin button-40() {
+    border: none;
+    border-radius: 10px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-shrink: 0;
+}
+
+@mixin button-60() {
+    border: 2px solid #FFF;
+    border-radius: 20px;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+@mixin bg-image-repeat-position($image, $repeat, $position) {
+    background-image: $image;
+    background-repeat: $repeat;
+    background-position: $position;
+}
+
+
+@mixin size-color-weight-height($size, $color, $weight, $height) {
+    font-family: inherit;
+    font-size: $size;
+    color: $color;
+    font-weight: $weight;
+    line-height: $height;
+}
+
+@mixin title-display-gap-bottom($display, $gap, $margin-bottom) {
+    display: $display;
+    gap: $gap;
+    margin-bottom: $margin-bottom;
+}

@@ -1,0 +1,77 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.select-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex-shrink: 1;
+}
+
+.select-name {
+    @include size-color-weight-height(10px, $dark-grey, 500, 18px);
+    padding-left: 10px;
+}
+
+.select {
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 0 10px;
+    min-height: 40px;
+    min-width: 95px;
+    appearance: none;
+    cursor: pointer;
+    @include bg-image-repeat-position(url('/icons/arrow-down.svg'), no-repeat, right 10px top 50%);
+    @include size-color-weight-height(16px, #1D1D1D, 400, 24px);
+}
+
+.background-white {
+    background-color: #FFF;
+    border: 2px solid #FFF;
+}
+
+.background-gray {
+    background-color: $background-grey;
+    border: 2px solid $background-grey;
+    color: $dark-grey;
+}
+
+.select:hover {
+    border: 2px solid $pale-coral;
+}
+
+.select:focus {
+    border: 2px solid $bright-colar;
+    outline: none;
+}
+
+.width-290 {
+    max-width: 290px;
+}
+
+.width-240 {
+    max-width: 240px;
+}
+
+.width-226 {
+    max-width: 226px;
+}
+
+.width-101 {
+    max-width: 101px;
+}
+
+
+@media (max-width: 700px) {
+    .width-226 {
+        max-width: 600px;
+    }
+
+    .width-101 {
+        max-width: 500px;
+    }
+
+}
+
+
+
