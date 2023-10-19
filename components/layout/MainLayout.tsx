@@ -1,10 +1,13 @@
-import Logo from "./Logo";
-import MainNavigation from "./MainNavigation";
+import Logo from "../logo/Logo";
+import MainNavigation from "../navigation/MainNavigation";
+import SidebarMenu from "../sidebar/SidebarMenu";
 import styles from './MainLayout.module.scss'
 import { setUserId } from "@/store/userId-slice";
 
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import  { RootState }  from '../../store/index';
 import { v4 as uuidv4 } from 'uuid';
 
 type Props = {
@@ -14,6 +17,7 @@ type Props = {
 
 const MainLayout:React.FC<Props> = ({children}) => {
     const dispatch = useDispatch();
+    const mobileMenu = useSelector((state: RootState) => state.mobileMenu);
 
     useEffect(() => {
         const storedUserId = localStorage.getItem('userId');
@@ -27,9 +31,12 @@ const MainLayout:React.FC<Props> = ({children}) => {
         }
     }, []);
 
-
+    // if (mobileMenu.isOpen) {
+    //     return <SidebarMenu/>
+    // }
 
     return <>
+        <SidebarMenu isOpen={mobileMenu.isOpen}/>
         <div className={styles.wrapper}>
             <section className={styles["left-section"]}> 
                 <header className={styles.header}>

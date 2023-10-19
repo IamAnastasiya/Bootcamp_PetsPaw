@@ -49,6 +49,13 @@
     @include size-color-weight-height(16px, $dark-grey, 400, 24px);
 }
 
+.loader-wrapper {
+    min-height: 400px;
+    display: flex;
+    justify-content: center;
+}
+
+
 
 // @media (max-width: 1200px) {
 //     .wrapper {

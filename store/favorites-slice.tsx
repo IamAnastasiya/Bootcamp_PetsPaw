@@ -1,22 +1,23 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface FavoritesState {
-    images: {favId: string, imageId: string}[]
-}
+import Image from '../models/Image';
 
-const initialFavoritesState: FavoritesState = {
-    images: []
-}
+const initialFavoritesState: Image[] = [];
 
 const favoritesSlice = createSlice({
     name: 'favorites',
     initialState: initialFavoritesState,
     reducers: {
-        addToFavorites (state, action: PayloadAction<{favId: string, imageId: string}>) {
-            state.images.push(action.payload);
+        addToFavorites (state, action: PayloadAction<Image[]>) {
+            const favorites = action.payload.map((item) => ({
+                id: item.id, 
+                image_id: item.image_id,
+                image: {url: item.image.url}
+              }));
+            state.push(...favorites);
         },
         removeFromFavorites (state, action: PayloadAction<string>) {
-            state.images = state.images.filter(image => image.imageId !== action.payload);
+            state = state.filter(image => image.image_id !== action.payload);
         }
     }
 })

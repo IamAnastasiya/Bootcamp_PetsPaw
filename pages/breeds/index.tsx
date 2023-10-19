@@ -1,100 +1,117 @@
-import MainNavigation from "@/components/layout/MainNavigation";
 import { useEffect, useState, useRef } from 'react';
+import { getAllBreeds, getSetOfImages } from "@/services/breeds-api";
 
-import Logo from "@/components/layout/Logo";
-import ActionsHeader from "@/components/ui/ActionsHeader";
-import SelectList from "../../components/ui/SelectList";
-import BaseButton from "@/components/ui/BaseButton";
-import styles from './BreedsPage.module.scss';
+import SectionHeader from "@/components/header/SectionHeader";
+import LoaderSpinner from "@/components/loader/LoaderSpinner";
+import SelectList from "@/components/select/SelectList";
+import BackButton from "@/components/buttons/BackButton";
 import GridLayout from "@/components/layout/GridLayout";
 
+import styles from './BreedsPage.module.scss';
 
-const BreedsPage = () => {
-    const [breeds, setBreeds] = useState([]);
+import Image from '@/models/Image';
+import ApiImageData from '@/models/ApiImageData';
+import { BREED_LIMITS, BREEDS_DEFAULT } from '@/constants/constants';
+
+
+const BreedsPage:React.FC<{breeds: {name: string, value: string}[]}> = (props) => {
+    const [images, setImages] = useState<Image[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [limit, setLimit] = useState(5);
+    const [baseUrl, setBaseUrl] = useState(`images/search?&has_breeds=1&limit=10&order=RAND`);
+
     const shoudGetAllBreeds = useRef(true);     // to prevent duplicated useEffect running for the initial render
-    const limits = ['Limit: 5', 'Limit: 10', 'Limit: 15', 'Limit: 20'];
-    const url = `https://api.thecatapi.com/v1/breeds`;
-    const api_key = "live_cJJq1XRJPGRYOvxTVW06i3PHF4q1JaUX38KGzQvFtLdSRg9nOTnyUJJUUUNT0AUX";
-
-    const images = [
-        { url: '/images/test-image.png' },
-        { url: '/images/test-image.png' },
-        { url: '/images/test-image.png' },
-        { url: '/images/test-image.png' },
-        { url: '/images/test-image.png' },
-        { url: '/images/test-image.png' },
-        { url: '/images/test-image.png' },
-        { url: '/images/test-image.png' },
-        { url: '/images/test-image.png' },
-        { url: '/images/test-image.png' },
-        { url: '/images/test-image.png' },
-        { url: '/images/test-image.png' },
-        { url: '/images/test-image.png' },
-        { url: '/images/test-image.png' },
-        { url: '/images/test-image.png' },
-        { url: '/images/test-image.png' },
-        { url: '/images/test-image.png' },
-        { url: '/images/test-image.png' },
-        { url: '/images/test-image.png' },
-        { url: '/images/test-image.png' }
-    ];
-
 
     useEffect(() => {
         if (shoudGetAllBreeds.current) { 
             shoudGetAllBreeds.current = false;
-            const fetchData = async () => {
-            try {
-                const response = await fetch(url, {headers: {'x-api-key': api_key}})
-                const jsonData = await response.json();
-                console.log(jsonData);
-                const breedsArr = jsonData.map((item: {name: string}) => item.name)
-                setBreeds(breedsArr);
+            getSetOfImages(baseUrl).then(data => {
+                const newImages = data.filter((item: ApiImageData) => item.breeds.length > 0).map((item: ApiImageData) => ({
+                    image: { url: item.url }, 
+                    image_id: item.id, 
+                    breeds: { name: item.breeds[0].name, breedId: item.breeds[0].id }
+                }));
                 setIsLoading(false);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                setIsLoading(false);
-            }
-            };
-        
-            fetchData();
+                setImages(newImages);
+            })
         }
-    }, []);
+    }, [baseUrl]);
 
-    return <>
-    {/* <div className={styles.wrapper}> */}
-        {/* <section className={styles["left-section"]}>
-            <header className={styles.header}>
-                <Logo/>
-            </header>
-            <MainNavigation page="breeds"></MainNavigation>
-        </section> */}
-       
-        <section>
-            <ActionsHeader></ActionsHeader>
+
+    const setLoadingState = () => {
+        shoudGetAllBreeds.current = true;
+        setImages([]);
+        setIsLoading(true);
+    }
+
+    const limitSelectHandler = (value: string) => {
+        setLoadingState();
+        setBaseUrl((prevValue) => prevValue.replace(/limit=(\d+)/, `limit=${value}`));
+    }
+
+    const breedSelectHandler = (value: string) => {
+        setLoadingState();
+
+        const defaultValue = value === BREEDS_DEFAULT ? '' : `&breed_ids=${value}`;
+
+        if (baseUrl.includes('breed_ids')) {
+            setBaseUrl((prevValue) => prevValue.replace(/&breed_ids=[^&]+/, defaultValue));
+        } else {
+            setBaseUrl((prevValue) => prevValue.concat(`&breed_ids=${value}`));
+        }
+    }
+
+    const sortingHandler = (value: string) => {
+        setLoadingState();
+        setBaseUrl((prevValue) => prevValue.replace(/&order=[^&]+/, `&order=${value}`));
+    }
+
+
+
+    return <section className={styles['breeds-section']}>
+            <SectionHeader/>
             <div className={styles['breeds-container']}>
                 <div className={styles['title-wrapper']}>
-                    <BaseButton link={true} href="/" mode="back-btn"></BaseButton>
+                    <BackButton></BackButton>
                     <div className={styles['section-title']}>BREEDS</div>
-                    <SelectList options={breeds} defaultText="All breeds" width={226} bgColor="gray"></SelectList>
+                    <SelectList 
+                        options={props.breeds} 
+                        defaultText={BREEDS_DEFAULT} 
+                        width={226} 
+                        bgColor="gray"
+                        onSetValue={breedSelectHandler}
+                    ></SelectList>
                     <div>
-                        <SelectList options={limits} width={101} bgColor="gray"></SelectList>
-                        <button className={styles['filter-ZA']}></button>
-                        <button className={styles['filter-AZ']}></button>
+                        <SelectList 
+                            options={BREED_LIMITS} 
+                            initial={BREED_LIMITS[1]} 
+                            width={101} 
+                            bgColor="gray" 
+                            onSetValue={limitSelectHandler}
+                        ></SelectList>
+                        <button className={styles['filter-ZA']} onClick={() => sortingHandler('DESC')}></button>
+                        <button className={styles['filter-AZ']} onClick={() => sortingHandler('ASC')}></button>
                     </div>
                 </div>
 
+                {isLoading && <div className={styles['loader-wrapper']}><LoaderSpinner /></div>}
                 <GridLayout images={images} limit={30} coverMode="breed"></GridLayout>
             </div>
-
-
         </section>
-
-    {/* </div> */}
-    </>
 }
+
+
+
+export async function getStaticProps() {
+    const breeds = await getAllBreeds();
+    const result = breeds.map((item: {name: string; id: string}) => ({ name: item.name, value: item.id }));
+
+    return {
+        props: {
+            breeds: result
+        }
+    }
+}
+
 
 export default BreedsPage;
 

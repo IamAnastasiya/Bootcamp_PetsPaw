@@ -1,20 +1,6 @@
 @import '../styles/variables';
 @import '../styles/mixins';
 
-// .main-wrapper {
-//     @include page-layout;
-//     position: relative;
-//     contain: paint;
-// }
-
-// .left-section {
-//     @include sticky-section;
-// }
-
-// .header {
-//     @include logo-header;
-// }
-
 .nav-container {
     display: none;
 }
@@ -26,6 +12,7 @@
     max-width: 680px;
     width: 100%;
     min-height: 840px;
+    contain: layout;
 }
 
 .home-image {
@@ -47,17 +34,8 @@
     }
 }
 
-@media (max-width: 768px) {
-    // .main-wrapper {
-    //     justify-content: center;
-    //     padding-left: 30px;
-    // }
-}
 
 @media (max-width: 500px) {
-    // .main-wrapper {
-    //     padding: 20px;
-    // }
 
     .nav-container {
         max-width: 335px;

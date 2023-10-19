@@ -13,6 +13,10 @@
 //     @include logo-header;
 // }
 
+.breeds-section {
+    flex-basis: 680px;
+}
+
 .breeds-container {
     @include main-section;
 }
@@ -39,6 +43,13 @@
 .image-wrapper {
     position: relative;
     margin-bottom: 52px;
+}
+
+.loader-wrapper {
+    width: 100%;
+    min-height: 400px;
+    display: flex;
+    justify-content: center;
 }
 
 .filter-ZA {

@@ -1,0 +1,60 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.mobile-menu {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    z-index: 10;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: $background-grey;
+    padding-right: 20px;
+}
+
+.cross {
+    align-self: flex-end;
+    margin-right: 0;
+    @include button-40;
+    background-color: #FFF;
+    background-image: url('/icons/cross-colar-20.svg');
+    margin-bottom: 120px;
+}
+
+.cross:hover {
+    background-color: $bright-colar;
+    background-image: url('/icons/cross-white-20.svg');
+}
+
+.nav-list {
+    align-self: center;
+    display: flex;
+    column-gap: 16px;
+    list-style: none;
+    padding: 0;
+}
+
+
+@media (max-width: 1200px) {
+    .mobile-menu {
+        display: flex;
+        padding-right: 15px;
+    }
+}
+
+@media (max-width: 500px) {
+    .mobile-menu {
+        padding-right: 0;
+    }
+
+    .nav-list  {
+        flex-direction: column;
+        box-sizing: border-box;
+        row-gap: 20px;
+        padding: 15px;
+        width: 100%;
+    }
+}

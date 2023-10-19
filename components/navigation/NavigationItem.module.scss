@@ -1,0 +1,37 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.list-item {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
+
+.list-img {
+    @include flex-centered;
+    width: 138px;
+    min-height: 190px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    border: 4px solid rgba(255, 255, 255, 0.60);
+    &.voting {
+        background-color: $soft-lilac;
+    }
+    &.breeds {
+        background-color: $light-green;
+    }
+    &.gallery {
+        background-color: $dark-yellow;
+    }
+}
+
+.list-img:active {
+    border: 4px solid $pale-coral; 
+}
+
+
+@media (max-width: 500px) {
+    .list-img {
+        display: none;
+    }
+}

@@ -1,0 +1,98 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.main-nav-btn {
+    @include size-color-weight-height(12px, $bright-colar, 500, 16px);
+    text-align: center;
+    padding: 10px 0;
+    background-color: #FFF;
+    letter-spacing: 2px;
+    border-radius: 10px;
+}
+
+.header-btn {
+    @include button-60();
+    display: inline-block;
+    background-color: #FFF;
+}
+
+.main-nav-btn:hover,
+.header-btn:hover {
+    background-color: $pale-coral;
+    color: $bright-colar;
+}
+
+.main-nav-btn:active,
+.header-btn:active {
+    background-color: $bright-colar;
+    color: #FFFFFF;
+}
+
+
+
+.likes {
+    background-image: url('/icons/likes-30-colar.svg');
+}
+
+.likes:active,
+.likes.active {
+    background-image: url('/icons/likes-icon-white.svg');
+}
+
+
+
+.favorites {
+    background-image: url('/icons/favorite-30-colar.svg');
+}
+
+.favorites:active,
+.favorites.active {
+    background-image: url('/icons/favorite-icon-white.svg');
+}
+
+
+
+.dislikes {
+    background-image: url('/icons/dislikes-30-colar.svg');
+}
+
+.dislikes:active,
+.dislikes.active {
+    background-image: url('/icons/dislikes-icon-white.svg');
+}
+
+
+.menu {
+    background-image: url('/icons/menu.svg');
+}
+
+.menu:active {
+    background-color: $pale-coral;
+}
+
+.active {
+    background-color: $bright-colar;
+    color: #FFFFFF;
+}
+
+.action-button {
+    @include button-40();
+    background-color: #FFF;
+    background-image: url('/icons/action-colar.svg');
+    align-self: flex-end;
+}
+
+.action-button:hover {
+    background-color: $bright-colar;
+    background-image: url('/icons/action-white.svg');
+}
+
+@media (max-width: 600px) {
+    .action-button {
+        align-self: center;
+        width: 100%;
+        flex-shrink: 1;
+    }
+}
+
+

@@ -1,18 +1,6 @@
 @import '../../styles/mixins';
 @import '../../styles/variables';
 
-// .wrapper {
-//     @include page-layout;
-// }
-
-// .left-section {
-//     @include sticky-section;
-// }
-
-// .header {
-//     @include logo-header;
-// }
-
 .likes-section {
     flex-basis: 680px;
 }
@@ -42,6 +30,12 @@
     padding: 18px 20px;
     border-radius: 10px;
     @include size-color-weight-height(16px, $dark-grey, 400, 24px);
+}
+
+.loader-wrapper {
+    min-height: 400px;
+    display: flex;
+    justify-content: center;
 }
 
 

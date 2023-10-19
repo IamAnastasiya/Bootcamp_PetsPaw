@@ -1,0 +1,36 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.wrapper {
+    max-width: 446px;
+    width: 100%;
+}   
+
+.main-title {
+    @include size-color-weight-height(44px, #1d1d1d, 500, 58px);
+    margin: 0 0 10px;
+}
+
+.sub-title {
+    @include size-color-weight-height(20px, $dark-grey, 400, 28px);
+    margin: 0 0 60px;
+}
+
+.nav-text {
+    @include size-color-weight-height(20px, #1d1d1d, 500, 28px);
+    margin: 0 0 24px;
+}
+
+.nav-list {
+    display: flex;
+    column-gap: 16px;
+    list-style: none;
+    padding: 0;
+}
+
+@media (max-width: 500px) {
+    .nav-list  {
+        flex-direction: column;
+        row-gap: 20px;
+    }
+}

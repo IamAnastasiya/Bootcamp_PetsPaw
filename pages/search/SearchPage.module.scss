@@ -1,0 +1,50 @@
+@import '../../styles/mixins';
+@import '../../styles/variables';
+
+
+.search-section {
+    flex-basis: 680px;
+}
+
+.search-container {
+    background-color: #FFFFFF;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    min-height: 600px;
+}
+
+.title-wrapper {
+    @include title-display-gap-bottom(flex, 10px, 20px);
+}
+
+.section-title {
+    background-color: $bright-colar;
+    letter-spacing: 2px;
+    border-radius: 10px;
+    @include size-color-weight-height(20px, #FFF, 500, 30px);
+    padding: 5px 30px;
+}
+
+.empty-text {
+    background-color: $background-grey;
+    margin: 0;
+    padding: 18px 20px;
+    border-radius: 10px;
+    @include size-color-weight-height(16px, $dark-grey, 400, 24px);
+}
+
+.result-text {
+    @include size-color-weight-height(16px, $dark-grey, 400, 24px);
+    margin: 0 5px 20px;
+}
+
+.input {
+    @include size-color-weight-height(18px, black, 500, 26px);
+}
+
+.loader-wrapper {
+    min-height: 400px;
+    display: flex;
+    justify-content: center;
+}

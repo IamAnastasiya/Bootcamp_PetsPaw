@@ -5,14 +5,6 @@
     flex-basis: 680px;
 }
 
-// .left-section {
-//     @include sticky-section;
-// }
-
-// .header {
-//     @include logo-header;
-// }
-
 .voting-container {
     @include main-section;
 }
@@ -46,15 +38,6 @@
     max-width: 100%;
 }
 
-// @media (max-width: 1200px) {
-//     .wrapper {
-//         justify-content: center;
-//     }
-
-//     .left-section {
-//         display: none;
-//     }
-// }
 
 @media (max-width: 500px) {
     .image-wrapper {

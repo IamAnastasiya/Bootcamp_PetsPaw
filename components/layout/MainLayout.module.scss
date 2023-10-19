@@ -2,7 +2,8 @@
 
 .wrapper {
     @include page-layout;
-    contain: paint;
+    position: relative;
+    // contain: paint;
 }
 
 .left-section {

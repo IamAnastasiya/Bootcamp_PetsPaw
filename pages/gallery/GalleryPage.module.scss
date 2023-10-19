@@ -17,6 +17,10 @@
     @include main-section;
 }
 
+.gallery-section {
+    flex-basis: 680px;
+}
+
 .title-wrapper {
     display: flex;
     margin-bottom: 20px;
@@ -29,6 +33,13 @@
     letter-spacing: 2px;
     border-radius: 10px;
     padding: 5px 30px;
+}
+
+.loader-wrapper {
+    width: 100%;
+    min-height: 400px;
+    display: flex;
+    justify-content: center;
 }
 
 .back-block {
@@ -55,6 +66,7 @@
     display: flex;
     gap: 10px;
 }
+
 
 
 // @media (max-width: 1200px) {

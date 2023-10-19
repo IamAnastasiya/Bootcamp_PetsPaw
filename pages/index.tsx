@@ -1,5 +1,5 @@
-import MainNavigation from "@/components/layout/MainNavigation";
-import Logo from "@/components/layout/Logo";
+import MainNavigation from "@/components/navigation/MainNavigation";
+import Logo from "@/components/logo/Logo";
 
 import styles from '../styles/HomePage.module.scss';
 

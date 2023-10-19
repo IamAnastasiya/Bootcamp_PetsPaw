@@ -9,22 +9,23 @@
     z-index: 10;
     top: 30px;
     bottom: 30px;
-    left: 50%;
+    right: max(30px, calc((30px + (100vw - 1440px)/2)));
     border-radius: 20px;
     padding: 20px;
     box-sizing: border-box;
     background-color: $background-grey;
-
 }
   
 .modal.visible {
     display: flex;
+    flex-basis: 680px;
     flex-direction: column;
     align-items: center;
     animation: fade-slide-in 0.3s ease-out forwards;
 }
 
 .backdrop {
+    box-sizing: border-box;
     position: fixed;
     width: 100%;
     height: 100vh;
@@ -64,11 +65,13 @@
 .title {
     margin: 0 0 10px 0;
     @include size-color-weight-height(36px, #1D1D1D, 500, 52px);
+    text-align: center
 }
 
 .guidelines-text {
     @include size-color-weight-height(20px, $dark-grey, 400, 30px);
     margin: 0 0 40px 0;
+    text-align: center;
 }
 
 .drag-area {
@@ -84,8 +87,9 @@
     margin-bottom: 20px;
     cursor: pointer;
     position: relative;
-    overflow: hidden;
+    overflow: hidden;   
 }
+
 
 .drag-area input {
     position: absolute;
@@ -113,8 +117,13 @@
     width: 100%;
     max-height: 280px;
     border-radius: 10px;
-    object-fit: contain;
+    object-fit: cover;
     vertical-align: middle;
+}
+
+.rejected {
+    border: 2px dashed $bright-colar;
+    background-color: $pale-coral;
 }
 
 .modal-text {
@@ -137,4 +146,98 @@
     @include size-color-weight-height(12px, #FFF, 500, 16px);
     letter-spacing: 2px;
     cursor: pointer;
+}
+
+.success-text, .error-text {
+    background-color: #FFF;
+    @include size-color-weight-height(18px, $dark-grey, 400, 16px);
+    margin: 0;
+    padding: 15px 0;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.success-text::before {
+    content: url('/icons/round-check-green.svg');
+    margin-right: 7px;
+    margin-left: 15px;
+}
+
+.error-text::before {
+    content: url('/icons/error-20.svg');
+    vertical-align: middle;
+    margin-right: 10px;
+    margin-left: 15px;
+}
+
+.loader-wrapper {
+    width: 80px;
+    min-height: 80px;
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width: 1200px) {
+    .modal {
+        max-width: 680px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+@media (max-width: 765px) {
+    .modal {
+        width: 90%;
+    }
+
+    .drag-area {
+        padding: 100px 0 100px;
+    }
+
+
+}
+
+@media (max-width: 375px) {
+    .modal {
+        max-width: 335px;
+        width: 100%;
+    }
+
+    .cross {
+        max-width: 60px;
+        flex-basis: 60px;
+        margin-bottom: 20px;
+        background-image: url('/icons/cross-colar-60.svg');
+    }
+    
+    .title {
+        @include size-color-weight-height(20px, #1D1D1D, 500, 30px);
+    }
+    
+    .guidelines-text {
+        @include size-color-weight-height(20px, $dark-grey, 400, 30px);
+        margin-bottom: 20px;
+
+    }
+    
+    .drag-area {
+        padding: 54px 0 54px;
+        background-image: url('/icons/upload-img-100.svg');
+        margin-bottom: 10px;
+    }
+
+    
+    .img-area {
+        padding: 20px 10px;
+        margin-bottom: 10px;
+    }
+    
+    .img-area img {
+        max-height: 248px;
+    }
+    
+    
+    .upload-btn {
+        max-width: 335px;
+    }
 }
