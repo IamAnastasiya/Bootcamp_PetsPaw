@@ -1,10 +1,11 @@
 import BaseButton from "../buttons/BaseButton";
 import SearchBar from "../search/SearchBar";
 import styles from './SectionHeader.module.scss';
+
 import { useRouter } from 'next/router';
-// import  { RootState }  from '../../store/index';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { mobileMenuActions } from "@/store/mobile-menu";
+import React from 'react';
 
 
 const ActionsHeader = () => {
@@ -54,4 +55,5 @@ const ActionsHeader = () => {
     </div>
 }
 
-export default ActionsHeader;
+
+export default React.memo(ActionsHeader);

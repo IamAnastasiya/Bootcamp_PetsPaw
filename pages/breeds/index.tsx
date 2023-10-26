@@ -9,7 +9,7 @@ import GridLayout from "@/components/layout/GridLayout";
 
 import styles from './BreedsPage.module.scss';
 
-import Image from '@/models/Image';
+import Image from '@/models/ImageData';
 import ApiImageData from '@/models/ApiImageData';
 import { BREED_LIMITS, BREEDS_DEFAULT } from '@/constants/constants';
 
@@ -50,21 +50,17 @@ const BreedsPage:React.FC<{breeds: {name: string, value: string}[]}> = (props) =
 
     const breedSelectHandler = (value: string) => {
         setLoadingState();
-
         const defaultValue = value === BREEDS_DEFAULT ? '' : `&breed_ids=${value}`;
 
-        if (baseUrl.includes('breed_ids')) {
-            setBaseUrl((prevValue) => prevValue.replace(/&breed_ids=[^&]+/, defaultValue));
-        } else {
+        baseUrl.includes('breed_ids') ?
+            setBaseUrl((prevValue) => prevValue.replace(/&breed_ids=[^&]+/, defaultValue)) :
             setBaseUrl((prevValue) => prevValue.concat(`&breed_ids=${value}`));
-        }
     }
 
     const sortingHandler = (value: string) => {
         setLoadingState();
         setBaseUrl((prevValue) => prevValue.replace(/&order=[^&]+/, `&order=${value}`));
     }
-
 
 
     return <section className={styles['breeds-section']}>

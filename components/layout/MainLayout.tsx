@@ -29,11 +29,8 @@ const MainLayout:React.FC<Props> = ({children}) => {
         } else {
             dispatch(setUserId(storedUserId));
         }
-    }, []);
+    }, [dispatch]);
 
-    // if (mobileMenu.isOpen) {
-    //     return <SidebarMenu/>
-    // }
 
     return <>
         <SidebarMenu isOpen={mobileMenu.isOpen}/>

@@ -1,7 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { modalReducer } from './modal-slice';
 import { userIdReducer } from './userId-slice';
-import { favoritesReducer } from './favorites-slice';
 import { logsReducer } from './userLogs-slice';
 import { mobileMenuReducer } from './mobile-menu';
 
@@ -9,7 +8,6 @@ const store = configureStore({
     reducer: { 
         modal: modalReducer, 
         userId: userIdReducer, 
-        favorites: favoritesReducer, 
         userLogs: logsReducer ,
         mobileMenu: mobileMenuReducer
     }

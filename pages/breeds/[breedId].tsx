@@ -1,75 +1,34 @@
-import { useRouter} from 'next/router';
-import { useEffect, useState, useRef } from 'react';
+import { useState, useEffect } from 'react';
+import  Image from 'next/image';
 
 import SectionHeader from "@/components/header/SectionHeader";
 import BreedInfo from '@/components/breed-info/BreedInfo';
 import Pagination from '@/components/pagination/Pagination';
 import BackButton from "@/components/buttons/BackButton";
-import LoaderSpinner from '@/components/loader/LoaderSpinner';
 
-import { getImagesByBreed, getImageDetails } from '@/services/breeds-api';
+import { getImagesByBreed, getImageDetails, getAllBreeds } from '@/services/breeds-api';
 import { getIdFromImageUrl } from '../../helpers/helpers';
 import BreedData from '@/models/BreedData';
 
 import styles from './breedId.module.scss';
+import LoaderSpinner from '@/components/loader/LoaderSpinner';
 
 
+const DetailPage:React.FC<{images: string[], info: BreedData}> = (props) => {
 
-const DetailPage:React.FC<{}> = () => {
-
-    const shoudGetAllBreeds = useRef(true);     // to prevent duplicated useEffect running for the initial render
-    const [images, setImages] = useState<string[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
     const [imageNumber, setImageNumber] = useState(0);
-    const [info, setInfo] = useState<BreedData>({ description: '',  name: '',temperament: '',origin: '', weight: { metric: '', },life_span: ''});
+    const [isLoading, setIsLoading] = useState(false);
 
-    const router = useRouter();
-    const breedId = router.query.breedId as string;
-    // const currentImageId = router.query.image_id as string;
-
-    useEffect( () => {
-        if (shoudGetAllBreeds.current) { 
-            shoudGetAllBreeds.current = false;
-
-            try {
-                getImagesByBreed(breedId).then(data => {
-                    const imagesArr = data.slice(0, 5).map((item: {url: string}) => item.url);
-                    let firstImageId = '';
-                    imagesArr.forEach((item: string, index: number) => {
-                        setImages((prevState) => [...prevState, item]);
-
-                        if (index === 0) {
-                            firstImageId = getIdFromImageUrl(item);
-                        } 
-                    })
-                    return firstImageId;
-                })   
-                .then((id: string) => {
-                    return getImageDetails(id);
-                })
-                .then((data) => {
-                    setInfo({
-                        id: data.breeds[0].id,
-                        description: data.breeds[0].description, 
-                        name: data.breeds[0].name,
-                        temperament: data.breeds[0].temperament, 
-                        origin: data.breeds[0].origin, 
-                        weight: { metric: data.breeds[0].weight.metric },
-                        life_span: data.breeds[0].life_span
-                    });
-                    setIsLoading(false);
-                })
-            } catch (error) {
-                console.error('Error:', error);
-              }     
-        }
-    }, []);
-
+    useEffect(() => {
+        setIsLoading(true);
+    }, [imageNumber]);
 
 
     const handleImageChange = (index: number) => {
         setImageNumber(index);
     }
+
+    const handleLoadEvent = (): void => setIsLoading(false);
 
 
 return <section className={styles['breeds-section']}>
@@ -78,21 +37,67 @@ return <section className={styles['breeds-section']}>
             <div className={styles['title-wrapper']}>
                 <BackButton></BackButton>
                 <div className={styles['section-title']}>BREEDS</div>
-                <div className={styles['section-id']}>{info.id}</div>
+                <div className={styles['section-id']}>{props.info.id?.toUpperCase()}</div>
             </div>
- 
-            {isLoading && <div className={styles['loader-wrapper']}><LoaderSpinner /></div>}
-            {!isLoading && <div>
+
             <div className={styles['image-wrapper']}>
-                <img src={images[imageNumber]} alt="cat image" className={styles.image}/>
+                {isLoading && <div className={styles['loader-wrapper']}><LoaderSpinner/></div>}
+                <Image 
+                    src={props.images[imageNumber]} 
+                    alt="cat image" 
+                    className={`${styles.image} ${!isLoading ? styles.visible : ''}`} 
+                    fill
+                    priority
+                    onLoadingComplete={handleLoadEvent}
+                    sizes="(max-width: 640px) 100%"/>
                 <Pagination count={5} active={imageNumber} setPagination={handleImageChange}/>
             </div>
 
-            <BreedInfo info={info}></BreedInfo>
-            </div>}
+            <BreedInfo info={props.info}></BreedInfo>
 
         </div>
     </section>
 }
+
+
+export async function getStaticPaths() {
+
+    const breedsFromApi = await getAllBreeds();
+
+    return {
+        fallback: false,
+        paths: breedsFromApi.map((item: {name: string; id: string}) => ({ params: {breedId: item.id} }))
+    }
+}
+
+
+export async function getStaticProps(context: {params: {breedId: string}}) {
+
+    const breedId = context.params.breedId;
+
+    const imagesByBreed = await getImagesByBreed(breedId);
+    const imagesArr = imagesByBreed.slice(0, 5).map((item: {url: string}) => item.url);
+
+    const firstImage = getIdFromImageUrl(imagesArr[0]);
+    const infoDetails = await getImageDetails(firstImage);
+
+    return {
+        props: {
+            images: imagesArr,
+            info: {
+                id: infoDetails.breeds[0].id,
+                description: infoDetails.breeds[0].description, 
+                name: infoDetails.breeds[0].name,
+                temperament: infoDetails.breeds[0].temperament, 
+                origin: infoDetails.breeds[0].origin, 
+                weight: { metric: infoDetails.breeds[0].weight.metric },
+                life_span: infoDetails.breeds[0].life_span
+            }
+        }
+    }
+}
+
+
+
 
 export default DetailPage;

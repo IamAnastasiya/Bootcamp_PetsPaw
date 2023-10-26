@@ -6,6 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import  { RootState }  from '../../store/index';
 import { mobileMenuActions } from "@/store/mobile-menu";
 
+import Image from 'next/image';
+
 interface NavigationItemConfig {
     href: string,
     image: string,
@@ -24,7 +26,7 @@ const NavigationItem:React.FC<NavigationItemConfig> = (props) => {
 
     return <li className={styles["list-item"]} onClick={handleMobileMenuClick} >
                 <Link href={`/${props.href}`} className={`${styles["list-img"]} ${styles[`${props.href}`]}`}>
-                    <img src={props.image} alt={`go to ${props.href} page`} width="100" height="124"/>
+                    <Image src={props.image} alt={`go to ${props.href} page`} width="100" height="124" priority={true}/>
                 </Link>
                 <BaseButton 
                     link={true} 

@@ -6,6 +6,7 @@ import { sendNewImage } from '../../services/gallery-api';
 
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import Image from 'next/image';
 
 import  { RootState }  from '../../store/index';
 import  { modalActions }  from '../../store/modal-slice'; 
@@ -98,7 +99,7 @@ const ModalContainer = () => {
 
                 {(uploadStatus === "upload" || uploadStatus === "error") &&
                      <div className={`${styles['img-area']} ${uploadStatus === "error" ? styles.rejected : ''}`}>
-                        <img src={imageSrc} alt="" />
+                        <Image src={imageSrc} alt="" />
                 </div>}
                 {uploadStatus === "upload" && <p className={styles['modal-text']}>Image File Name: {fileName}</p>}
 

@@ -1,5 +1,5 @@
 import styles from './SearchBar.module.scss';
-import { useEffect, useState, useRef } from 'react';
+import { useState } from 'react';
 import { useRouter} from 'next/router';
 
 const SearchBar = () => {

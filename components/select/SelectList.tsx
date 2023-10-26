@@ -13,7 +13,6 @@ interface SelectConfig {
 
 
 const SelectList:React.FC<SelectConfig> = (props) => {
-  //delete ? for onSetValue
   
   const [isOpen, setIsOpen] = useState(false); 
 
@@ -28,9 +27,7 @@ const SelectList:React.FC<SelectConfig> = (props) => {
       className={`${styles.select} ${styles[`background-${props.bgColor}`]}`} 
       onClick={toggleDropdown} 
       defaultValue={props.initial?.value}
-       
       onChange={(event) => props.onSetValue(event.target.value)}
-      // onChange={(event) => {console.log(event.target.value); props.onSetValue(event.target.value)}}
     >
         {props.defaultText && <option className={styles['default-text']} value={props.defaultText}>{props.defaultText}</option>}
           {props.options.map((item, index) => (

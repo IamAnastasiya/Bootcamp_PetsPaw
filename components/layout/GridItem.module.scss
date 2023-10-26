@@ -1,0 +1,67 @@
+@import '../../styles/mixins';
+
+.image {
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    object-fit: cover;
+}
+
+.wrapper {
+    height: 100%;
+}
+
+.grid-cover {
+    background-color: rgba(255, 134, 142, 0.60);
+    border-radius: 20px;
+    position: absolute;
+    opacity: 0;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 0.2s ease-in;
+    box-sizing: border-box;
+    padding: 0 10px;
+}
+
+.wrapper:hover .grid-cover {
+    transition: all 0.2s ease-in;
+    opacity: 1;
+    display: flex;
+    align-items: flex-end;
+}
+
+.cover-content {
+    visibility: hidden;
+    opacity: 0;
+    background-color: #FFF;
+    line-height: 24px;
+    padding: 5px 0;
+    width: 100%;
+    border-radius: 10px;
+    text-align: center;
+    margin: 0 0 10px 0;
+}
+
+.wrapper:hover .cover-content {
+    visibility: visible;
+    opacity: 1;
+    transition: all 0.2s ease-in;
+}
+
+.fav {
+    width: 20%;
+    max-width: 40px;
+    margin: auto;
+    min-height: 40px;
+    @include bg-image-repeat-position(url('/icons/favorite-20-icon.svg'), no-repeat, center);
+    border-radius: 10px;
+    padding: 0;
+    cursor: pointer;
+}
+
+.is-favorite {
+    @include bg-image-repeat-position(url('/icons/favorite-20-colar.svg'), no-repeat, center);
+}

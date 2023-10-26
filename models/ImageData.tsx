@@ -1,4 +1,4 @@
-type Image = {
+type ImageData = {
     id?: number;
     image: {url: string}
     image_id: string;
@@ -10,4 +10,4 @@ type Image = {
     isFav?: boolean
 }
 
-export default Image;
+export default ImageData;

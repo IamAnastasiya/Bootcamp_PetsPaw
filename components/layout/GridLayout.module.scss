@@ -10,69 +10,15 @@
 .grid-item {
     height: 140px;
     position: relative;
-    img {
-        width: 100%;
-        height: 100%;
-        border-radius: 20px;
-        box-sizing: border-box;
-        object-fit: cover;
-
-    }
-}
-
-.grid-cover {
-    background-color: rgba(255, 134, 142, 0.60);
+    overflow: hidden;
     border-radius: 20px;
-    position: absolute;
-    opacity: 0;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    width: 100%;
+    background-color: rgb(253, 246, 237);
+}
+
+.grid-link {
+    display: block;
+    position: relative;
     height: 100%;
-    transition: all 0.2s ease-in;
-    box-sizing: border-box;
-    padding: 0 10px;
-}
-
-.grid-item:hover .grid-cover {
-    transition: all 0.2s ease-in;
-    opacity: 1;
-    display: flex;
-    align-items: flex-end;
-}
-
-.cover-content {
-    visibility: hidden;
-    opacity: 0;
-    background-color: #FFF;
-    line-height: 24px;
-    padding: 5px 0;
-    width: 100%;
-    border-radius: 10px;
-    text-align: center;
-    margin: 0 0 10px 0;
-}
-
-.grid-item:hover .cover-content {
-    visibility: visible;
-    opacity: 1;
-    transition: all 0.2s ease-in;
-}
-
-.fav {
-    width: 20%;
-    max-width: 40px;
-    margin: auto;
-    min-height: 40px;
-    @include bg-image-repeat-position(url('/icons/favorite-20-icon.svg'), no-repeat, center);
-    border-radius: 10px;
-    padding: 0;
-    cursor: pointer;
-}
-
-.is-favorite {
-    @include bg-image-repeat-position(url('/icons/favorite-20-colar.svg'), no-repeat, center);
 }
 
 .grid-item:nth-child(10n + 1) {
@@ -85,10 +31,6 @@
     grid-row: span 2;
     height: 300px;
 }
-
-// .grid-item:nth-child(10n + 5) {
-//     max-height: 140px;
-// }
 
 .grid-item:nth-child(10n + 8) {
     grid-row: span 2;

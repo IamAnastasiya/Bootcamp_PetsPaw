@@ -16,7 +16,7 @@ import { getAllBreeds, getSetOfImages} from "@/services/breeds-api";
 import { getAllFavorites, addToApiFavorites, deleteFromApiFavorites } from "@/services/favorites-api";
 import UploadButton from "@/components/buttons/UploadButton";
 
-import Image from '@/models/Image';
+import ImageData from '@/models/ImageData';
 import ApiImageData from '@/models/ApiImageData';
 
 
@@ -25,14 +25,14 @@ const GalleryPage:React.FC<{breeds: {name: string, value: string}[]}> = (props) 
     const userId = useSelector((state: RootState) => state.userId);
 
 
-    const [images, setImages] = useState<Image[]>([]);
+    const [images, setImages] = useState<ImageData[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [limit, setLimit] = useState('5');
     const [order, setOrder] = useState('RAND');
     const [type, setType] = useState('gif,jpg,png');
 
     const [chosenBreed, setChosenBreed] = useState('');
-    const [favorites, setFavorites] = useState<Image[]>([]);
+    const [favorites, setFavorites] = useState<ImageData[]>([]);
     const [baseUrl, setBaseUrl] = useState(`images/search?&has_breeds=1&limit=5&order=RAND`);
     const shoudGetAllBreeds = useRef(true);     // to prevent duplicated useEffect running for the initial render
 
@@ -41,13 +41,13 @@ const GalleryPage:React.FC<{breeds: {name: string, value: string}[]}> = (props) 
         if (shoudGetAllBreeds.current) { 
             shoudGetAllBreeds.current = false;
             getAllFavorites(userId.id).then(data => {
-                const favoriteImages = data.map((item: Image) => ({...item,  isFav: true }));
+                const favoriteImages = data.map((item: ImageData) => ({...item,  isFav: true }));
                 setFavorites(favoriteImages);  
                 getSetOfImages(baseUrl).then(data => {
                     const newImages = data.map((item: ApiImageData) => ({
                         image: { url: item.url }, 
                         image_id: item.id,
-                        isFav: favoriteImages.some((favorite: Image) => favorite.image_id === item.id)
+                        isFav: favoriteImages.some((favorite: ImageData) => favorite.image_id === item.id)
                     }));   
   
                     setIsLoading(false);
@@ -55,7 +55,7 @@ const GalleryPage:React.FC<{breeds: {name: string, value: string}[]}> = (props) 
                 })
         });
         }
-    }, [baseUrl, isLoading]);
+    }, [baseUrl, isLoading, userId.id]);
 
 
     const handleUpdateAction = () => {
@@ -63,12 +63,9 @@ const GalleryPage:React.FC<{breeds: {name: string, value: string}[]}> = (props) 
         setImages([]);
         setIsLoading(true);
 
-        // console.log(props.breeds);
-
         const breed = (!chosenBreed || chosenBreed === 'None') ? '' : `breed_ids=${chosenBreed}`;
         const imageType = type === 'gif' ? 'mime_type=gif' : `mime_types=${type}`;
         setBaseUrl(`images/search?&has_breeds=1&limit=${limit}&order=${order}&${breed}&${imageType}`);
-
     }
 
     const updateFavoriteStatus = (id: string) => {
@@ -84,9 +81,9 @@ const GalleryPage:React.FC<{breeds: {name: string, value: string}[]}> = (props) 
                     console.error('Failed to delete favorite');
                 }
             })
-            // .catch(error => {
-            // console.error('Error deleting favorite:', error);
-            // });
+            .catch(error => {
+            console.error('Error deleting favorite:', error);
+            });
         } else {
             addToApiFavorites({"image_id": id, "sub_id": userId.id})
 

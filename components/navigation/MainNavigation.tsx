@@ -1,5 +1,6 @@
 import styles from "./MainNavigation.module.scss";
 import NavigationItem from "./NavigationItem";
+import React from 'react';
 
 const MainNavigation = () => {
     return (<div className={styles.wrapper}>
@@ -17,4 +18,5 @@ const MainNavigation = () => {
         </div>);
 };
 
-export default MainNavigation;
+export default React.memo(MainNavigation);
+
