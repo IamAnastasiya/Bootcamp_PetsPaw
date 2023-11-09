@@ -1,11 +1,7 @@
 @import '../../styles/mixins';
 @import '../../styles/variables';
 
-.wrapper {
-    flex-basis: 680px;
-}
-
-.voting-container {
+.container {
     @include main-section;
 }
 
@@ -29,12 +25,27 @@
     max-width: 640px;
     width: 100%;
     height: 360px;
+
 }
 
 .image-wrapper img {
     border-radius: 20px;
     object-fit: cover;
     max-width: 100%;
+    background-color: rgb(253, 246, 237);
+}
+
+.error-wrapper {
+    @include flex-centered();
+    padding: 30vh 20px;
+    margin: 0;
+    background-color: #FFF;
+    border-radius: 10px;
+}
+
+.error {
+    @include size-color-weight-height(18px, $bright-colar, 500, 16px);
+    margin-right: 20px;
 }
 
 

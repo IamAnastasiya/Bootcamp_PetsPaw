@@ -1,0 +1,43 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+
+.success-text, .error-text {
+    background-color: #FFF;
+    @include size-color-weight-height(18px, $dark-grey, 400, 16px);
+    margin: 0;
+    padding: 15px 0;
+    border-radius: 10px;
+    width: 100%;
+    animation: slide-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.success-text::before {
+    content: url('/icons/round-check-green.svg');
+    margin-right: 7px;
+    margin-left: 15px;
+}
+
+.error-text::before {
+    content: url('/icons/error-20.svg');
+    vertical-align: middle;
+    margin-right: 10px;
+    margin-left: 15px;
+}
+
+@keyframes slide-left {
+    0% {
+        transform: translateX(100px);
+      }
+      100% {
+        transform: translateX(0);
+      }
+}
+
+  
+@media (max-width: 400px) {
+    .success-text, .error-text {
+        font-size: 16px;
+    }
+
+}

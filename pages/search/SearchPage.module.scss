@@ -1,17 +1,8 @@
 @import '../../styles/mixins';
 @import '../../styles/variables';
 
-
-.search-section {
-    flex-basis: 680px;
-}
-
-.search-container {
-    background-color: #FFFFFF;
-    padding: 20px;
-    box-sizing: border-box;
-    border-radius: 20px;
-    min-height: 600px;
+.container {
+    @include main-section;
 }
 
 .title-wrapper {

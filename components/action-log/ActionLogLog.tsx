@@ -12,7 +12,14 @@ const iconPath = `/icons/${props.category}-20-icon.svg`;
 return <div className={styles['log-wrapper']}>
         <span className={styles['log-time']}>{actionTime}</span>
         <span className={styles['log-name']}>Image ID: <span className={styles.bold}>{props.id}</span>{logActionText}</span>
-        {props.action === 'add' && <Image className={styles.icon} src={iconPath} alt={`${props.category} icon`} priority width={20} height={20} />}
+        {props.action === 'add' && <Image 
+                className={styles.icon} 
+                src={iconPath} 
+                alt={`${props.category} icon`} 
+                priority 
+                width={20} 
+                height={20} 
+        />}
 </div>
 
 }

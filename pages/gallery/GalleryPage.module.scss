@@ -1,24 +1,9 @@
 @import '../../styles/mixins';
 @import '../../styles/variables';
 
-// .wrapper {
-//     @include page-layout;
-// }
 
-// .left-section {
-//     @include sticky-section;
-// }
-
-// .header {
-//     @include logo-header;
-// }
-
-.gallery-container {
+.container {
     @include main-section;
-}
-
-.gallery-section {
-    flex-basis: 680px;
 }
 
 .title-wrapper {
@@ -37,7 +22,7 @@
 
 .loader-wrapper {
     width: 100%;
-    min-height: 400px;
+    min-height: 470px;
     display: flex;
     justify-content: center;
 }
@@ -67,18 +52,45 @@
     gap: 10px;
 }
 
+.empty-text {
+    background-color: $background-grey;
+    margin: 0;
+    padding: 18px 20px;
+    border-radius: 10px;
+    @include size-color-weight-height(16px, $dark-grey, 400, 24px);
+}
 
+.page-btns {
+    margin: auto;
+    display: flex;
+    max-width: 400px;
+    width: 100%;
+    justify-content: space-between;
+    padding-top: 20px;
+}
 
-// @media (max-width: 1200px) {
-//     .wrapper {
-//         justify-content: center;
-//     }
+.page-btns button {
+    max-width: 100px;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    @include size-color-weight-height(12px, $bright-colar, 500, 16px);
+    background-color: $pale-coral;
+    cursor: pointer;
+}
 
-//     .left-section {
-//         display: none;
-//     }
+.page-btns button:hover {
+    background-color: $bright-colar;
+    @include size-color-weight-height(12px, white, 500, 16px);
+}
 
-// }
+.page-btns .disabled, .page-btns .disabled:hover {
+    background-color: $background-grey;
+    cursor: default;
+    @include size-color-weight-height(12px, $dark-grey, 500, 16px);
+}
+
 
 @media (max-width: 600px) {
 
@@ -91,6 +103,8 @@
         flex-direction: column;
     }
 
+    
+
 }
 
 @media (max-width: 500px) {
@@ -99,9 +113,3 @@
         row-gap: 10px;
     }
 }
-
-// @media (max-width: 375px) {
-//     .wrapper {
-//         padding: 20px;
-//     }
-// }

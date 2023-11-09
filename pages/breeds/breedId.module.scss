@@ -1,11 +1,7 @@
 @import '../../styles/mixins';
 @import '../../styles/variables';
 
-.breeds-section {
-    flex-basis: 680px;
-}
-
-.breeds-container {
+.container {
     @include main-section;
 }
 

@@ -43,6 +43,15 @@
     height: 300px;
 }
 
+.error {
+    @include flex-centered();
+    background-color: $background-grey;
+    margin: 0;
+    padding: 18px 20px;
+    border-radius: 10px;
+    @include size-color-weight-height(18px, $bright-colar, 500, 16px);
+}
+
 @media (max-width: 630px) {
     .grid-layout {
         grid-template-columns: 1fr;

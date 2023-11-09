@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import  Image from 'next/image';
 
-import SectionHeader from "@/components/header/SectionHeader";
 import BreedInfo from '@/components/breed-info/BreedInfo';
 import Pagination from '@/components/pagination/Pagination';
 import BackButton from "@/components/buttons/BackButton";
@@ -14,9 +13,9 @@ import styles from './breedId.module.scss';
 import LoaderSpinner from '@/components/loader/LoaderSpinner';
 
 
-const DetailPage:React.FC<{images: string[], info: BreedData}> = (props) => {
+const DetailPage:React.FC<{images: string[], info: BreedData}> = ({images, info}) => {
 
-    const [imageNumber, setImageNumber] = useState(0);
+    const [imageNumber, setImageNumber] = useState<number>(0);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
@@ -30,33 +29,29 @@ const DetailPage:React.FC<{images: string[], info: BreedData}> = (props) => {
 
     const handleLoadEvent = (): void => setIsLoading(false);
 
-
-return <section className={styles['breeds-section']}>
-        <SectionHeader />
-        <div className={styles['breeds-container']}>
+return <div className={styles.container}>
             <div className={styles['title-wrapper']}>
                 <BackButton></BackButton>
                 <div className={styles['section-title']}>BREEDS</div>
-                <div className={styles['section-id']}>{props.info.id?.toUpperCase()}</div>
+                <div className={styles['section-id']}>{info.id?.toUpperCase()}</div>
             </div>
 
             <div className={styles['image-wrapper']}>
                 {isLoading && <div className={styles['loader-wrapper']}><LoaderSpinner/></div>}
                 <Image 
-                    src={props.images[imageNumber]} 
+                    src={images[imageNumber]} 
                     alt="cat image" 
                     className={`${styles.image} ${!isLoading ? styles.visible : ''}`} 
                     fill
                     priority
                     onLoadingComplete={handleLoadEvent}
                     sizes="(max-width: 640px) 100%"/>
-                <Pagination count={5} active={imageNumber} setPagination={handleImageChange}/>
+                <Pagination count={images.length} active={imageNumber} setPagination={handleImageChange}/>
             </div>
 
-            <BreedInfo info={props.info}></BreedInfo>
+            <BreedInfo info={info}></BreedInfo>
 
         </div>
-    </section>
 }
 
 
@@ -96,7 +91,6 @@ export async function getStaticProps(context: {params: {breedId: string}}) {
         }
     }
 }
-
 
 
 

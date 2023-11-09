@@ -1,12 +1,14 @@
 import Logo from "../logo/Logo";
 import MainNavigation from "../navigation/MainNavigation";
 import SidebarMenu from "../sidebar/SidebarMenu";
+import SectionHeader from "../header/SectionHeader";
 import styles from './MainLayout.module.scss'
 import { setUserId } from "@/store/userId-slice";
+import { getCookie } from "@/helpers/helpers";
 
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useRouter} from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
 import  { RootState }  from '../../store/index';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -17,20 +19,20 @@ type Props = {
 
 const MainLayout:React.FC<Props> = ({children}) => {
     const dispatch = useDispatch();
+    const router = useRouter();
     const mobileMenu = useSelector((state: RootState) => state.mobileMenu);
 
     useEffect(() => {
-        const storedUserId = localStorage.getItem('userId');
+        const storedUserId = getCookie('userId');
 
         if (!storedUserId) {
             const uniqueUserId = uuidv4();
-            localStorage.setItem('userId', uniqueUserId);
+            document.cookie = `userId=${uniqueUserId}`;
             dispatch(setUserId(uniqueUserId));
         } else {
             dispatch(setUserId(storedUserId));
         }
     }, [dispatch]);
-
 
     return <>
         <SidebarMenu isOpen={mobileMenu.isOpen}/>
@@ -41,7 +43,11 @@ const MainLayout:React.FC<Props> = ({children}) => {
                 </header>
                 <MainNavigation></MainNavigation>
             </section>
-            {children}
+            <section className={styles['content-section']}>
+                {router.pathname !== '/' && <SectionHeader/>}
+                {children}
+            </section>
+
         </div>
     </>
 }

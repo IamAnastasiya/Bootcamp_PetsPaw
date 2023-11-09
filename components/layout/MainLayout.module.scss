@@ -3,7 +3,6 @@
 .wrapper {
     @include page-layout;
     position: relative;
-    // contain: paint;
 }
 
 .left-section {
@@ -12,6 +11,10 @@
 
 .header {
     @include logo-header;
+}
+
+.content-section {
+    flex-basis: 680px;
 }
 
 @media (max-width: 1200px) {

@@ -21,10 +21,9 @@ export const getImageDetails = async (id: string) => {
 }
 
 export const getSetOfImages = async (path: string) => {
-    const data = await fetch(`${BASE_URL}${path}`, {
+    return await fetch(`${BASE_URL}${path}`, {
         headers: headers
     });
-    return await data.json();
 }
 
 

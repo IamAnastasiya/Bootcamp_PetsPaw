@@ -6,10 +6,14 @@ const headers = {
 }
 
 export const getAllFavorites = async (userId: string) => {
-    const data = await fetch(`${BASE_URL}favourites?sub_id=${userId}`, {
+    const response = await fetch(`${BASE_URL}favourites?sub_id=${userId}`, {
         headers: headers
     });
-    return await data.json();
+    if (!response.ok) {
+        return {hasError: true};
+    } else {
+        return await response.json();
+    }
 }
 
 export const addToApiFavorites = async (imageData: {image_id: string, sub_id: string}) => {

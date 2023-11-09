@@ -17,8 +17,9 @@
 }
 
 .nav-text {
-    @include size-color-weight-height(20px, #1d1d1d, 500, 28px);
+    @include size-color-weight-height(26px, #1d1d1d, 500, 28px);
     margin: 0 0 24px;
+    opacity: 0.8;
 }
 
 .nav-list {

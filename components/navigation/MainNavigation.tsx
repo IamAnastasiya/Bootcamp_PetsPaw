@@ -6,7 +6,7 @@ const MainNavigation = () => {
     return (<div className={styles.wrapper}>
             <h1 className={styles["main-title"]}>Hi!👋</h1>
             <p className={styles["sub-title"]}>
-                Welcome to MacPaw Bootcamp 2023
+                Welcome to my Pet Project 2023 / Next.js
             </p>
             <p className={styles["nav-text"]}>Lets start using The Cat API</p>
 

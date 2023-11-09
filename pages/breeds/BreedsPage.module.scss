@@ -1,23 +1,7 @@
 @import '../../styles/mixins';
 @import '../../styles/variables';
 
-// .wrapper {
-//     @include page-layout;
-// }
-
-// .left-section {
-//     @include sticky-section;
-// }
-
-// .header {
-//     @include logo-header;
-// }
-
-.breeds-section {
-    flex-basis: 680px;
-}
-
-.breeds-container {
+.container {
     @include main-section;
 }
 
@@ -81,14 +65,6 @@
 }
 
 @media (max-width: 1200px) {
-    // .wrapper {
-    //     justify-content: center;
-    // }
-
-    // .left-section {
-    //     display: none;
-    // }
-
     .image-wrapper img {
         width: 100%;
     }
@@ -104,11 +80,5 @@
         max-width: 600px;
     }
 }
-
-// @media (max-width: 375px) {
-//     .wrapper {
-//         padding: 20px;
-//     }
-// }
 
 

@@ -2,16 +2,15 @@ import { getRandomImage, sendImageVote } from "@/services/votes-api";
 import { addToApiFavorites } from "@/services/favorites-api";
 
 import ActionLog from '../../components/action-log/ActionLogLog';
-import SectionHeader from "@/components/header/SectionHeader";
 import ActionsBar from "@/components/voting-actions/ActionsBar";
 import BackButton from "@/components/buttons/BackButton";
+import BaseButton from "@/components/buttons/BaseButton";
 import LoaderSpinner from "@/components/loader/LoaderSpinner";
 import styles from './VotingPage.module.scss';
 
-
 import { useSelector, useDispatch } from 'react-redux';
 import  { RootState }  from '../../store/index';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import  { logsActions } from '../../store/userLogs-slice';
 import Image from 'next/image'
 
@@ -26,24 +25,28 @@ const dispatch = useDispatch();
 const [pet, setPet] = useState({url: '', id: ''});
 const [nextPet, setNextPet] = useState(false);
 const [isLoading, setIsLoading] = useState(false);
-const shoudGetCategoryCounts = useRef(true);      // to prevent duplicated useEffect running for the initial render
+const [error, setError] = useState(false);
 
 useEffect(() => {
     setIsLoading(true);
-        if (shoudGetCategoryCounts.current) { 
-            shoudGetCategoryCounts.current = false;
-            getRandomImage().then(data => {
+    getRandomImage().then(data => {
+        if (!data) {
+            setError(true);
+        } else {
             setPet(data);
-            setIsLoading(false);
-            });
         }
+    }).catch((err) => {
+        setError(true);
+    })
+    .finally(() => {
+    setIsLoading(false);
+    });
 }, [nextPet])
 
 
 const showNext = (category: string) => {
     const newVotingLogItem = { id: pet.id, action: 'add', category: category };
     dispatch(logsActions.addToVotingLog(newVotingLogItem))
-    shoudGetCategoryCounts.current = true;
     setNextPet((prevState) => prevState = !prevState);
     category === 'favorite' ? setAsFavorite() : sendVote(category);
 }
@@ -52,32 +55,42 @@ const showNext = (category: string) => {
 const sendVote = (category: string) => {
     sendImageVote({
         "image_id": pet.id,
-        "sub_id": userId.id,
+        "sub_id": userId,
         "value": category === 'likes' ? 1 : -1
     });
 }
 
 const setAsFavorite = () => {
     try {
-        addToApiFavorites({"image_id": pet.id, "sub_id": userId.id})
+        addToApiFavorites({"image_id": pet.id, "sub_id": userId})
 
     } catch (error) {
         console.error('An error occurred:', error);
     }
 }
 
+const handleErrorCase = () => {
+    setError(false);
+    setNextPet((prevState) => prevState = !prevState);
+}
 
-return <>
-    <section className={styles.wrapper}>
-        <SectionHeader/>
-        <div className={styles['voting-container']}>
+
+if (error) {
+    return <div className={styles['error-wrapper']}>
+        <span className={styles.error}>Something went wrong, please try again</span>
+        <BaseButton mode="action-button" onClick={handleErrorCase}></BaseButton>
+    </div>
+}
+
+
+return  <div className={styles.container}>
             <div className={styles['title-wrapper']}>
-                    <BackButton></BackButton>
+                <BackButton></BackButton>
                 <div className={styles['section-title']}>VOTING</div>
             </div>
             <div className={styles['image-wrapper']}>
                 {!isLoading && pet.url && <Image src={pet.url} alt="cat" width={600} height={360} priority={true}/>}
-                {isLoading && <LoaderSpinner></LoaderSpinner>}
+                {isLoading && <LoaderSpinner/>}
                 <ActionsBar onClick={showNext}></ActionsBar>
             </div>
 
@@ -85,8 +98,6 @@ return <>
                 <ActionLog key={info.id} id={info.id} action={info.action} category={info.category}></ActionLog>
             ))}
         </div>
-    </section>
-    </>
 }
 
 

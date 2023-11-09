@@ -1,27 +1,8 @@
 @import '../../styles/mixins';
 @import '../../styles/variables';
 
-// .wrapper {
-//     @include page-layout;
-// }
-
-// .left-section {
-//     @include sticky-section;
-// }
-
-// .header {
-//     @include logo-header;
-// }
-
-.favorites-section {
-    flex-basis: 680px;
-}
-
-.favorites-container {
-    background-color: #FFFFFF;
-    padding: 20px;
-    box-sizing: border-box;
-    border-radius: 20px;
+.container {
+    @include main-section;
 }
 
 .title-wrapper {
@@ -55,15 +36,3 @@
     justify-content: center;
 }
 
-
-
-// @media (max-width: 1200px) {
-//     .wrapper {
-//         padding: 30px;
-//         justify-content: center;
-//     }
-
-//     .left-section {
-//         display: none;
-//     }
-// }

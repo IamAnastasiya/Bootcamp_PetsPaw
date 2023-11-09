@@ -6,8 +6,7 @@ const headers = {
 }
 
 export const getAllVotes = async (userId: string) => {
-    const data = await fetch(`${BASE_URL}votes?api_key=${API_KEY}&sub_id=${userId}`);
-    return await data.json();
+    return await fetch(`${BASE_URL}votes?api_key=${API_KEY}&sub_id=${userId}`);
 }
 
 export const getRandomImage = async () => {

@@ -7,9 +7,10 @@ const SearchBar = () => {
   const router = useRouter();
   const [searchInput, setSearchInput] = useState('');
 
-  const handleSearchInput = (event: React.FormEvent) => {
+  const handleSearchInput = async (event: React.FormEvent) => {
       event.preventDefault();
-      router.push(`/search?breed=${searchInput}`);
+      await router.push(`/search?breed=${searchInput}`);
+      setSearchInput('');
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

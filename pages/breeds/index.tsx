@@ -1,7 +1,6 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { getAllBreeds, getSetOfImages } from "@/services/breeds-api";
 
-import SectionHeader from "@/components/header/SectionHeader";
 import LoaderSpinner from "@/components/loader/LoaderSpinner";
 import SelectList from "@/components/select/SelectList";
 import BackButton from "@/components/buttons/BackButton";
@@ -16,30 +15,40 @@ import { BREED_LIMITS, BREEDS_DEFAULT } from '@/constants/constants';
 
 const BreedsPage:React.FC<{breeds: {name: string, value: string}[]}> = (props) => {
     const [images, setImages] = useState<Image[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(false);
     const [baseUrl, setBaseUrl] = useState(`images/search?&has_breeds=1&limit=10&order=RAND`);
 
-    const shoudGetAllBreeds = useRef(true);     // to prevent duplicated useEffect running for the initial render
-
     useEffect(() => {
-        if (shoudGetAllBreeds.current) { 
-            shoudGetAllBreeds.current = false;
-            getSetOfImages(baseUrl).then(data => {
+            setIsLoading(true);
+            getSetOfImages(baseUrl).then(response => {
+                if (response.ok) {
+                    return response.json();
+                } 
+    
+                return response.json().then((data) => {
+                    throw new Error(data.message || "Failed to fetch");
+                });
+            }).then(data => {
                 const newImages = data.filter((item: ApiImageData) => item.breeds.length > 0).map((item: ApiImageData) => ({
                     image: { url: item.url }, 
                     image_id: item.id, 
                     breeds: { name: item.breeds[0].name, breedId: item.breeds[0].id }
                 }));
-                setIsLoading(false);
                 setImages(newImages);
             })
-        }
+            .catch((error) => {
+                setError(true);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
     }, [baseUrl]);
 
 
     const setLoadingState = () => {
-        shoudGetAllBreeds.current = true;
         setImages([]);
+        setError(false);
         setIsLoading(true);
     }
 
@@ -63,9 +72,7 @@ const BreedsPage:React.FC<{breeds: {name: string, value: string}[]}> = (props) =
     }
 
 
-    return <section className={styles['breeds-section']}>
-            <SectionHeader/>
-            <div className={styles['breeds-container']}>
+    return <div className={styles.container}>
                 <div className={styles['title-wrapper']}>
                     <BackButton></BackButton>
                     <div className={styles['section-title']}>BREEDS</div>
@@ -90,9 +97,8 @@ const BreedsPage:React.FC<{breeds: {name: string, value: string}[]}> = (props) =
                 </div>
 
                 {isLoading && <div className={styles['loader-wrapper']}><LoaderSpinner /></div>}
-                <GridLayout images={images} limit={30} coverMode="breed"></GridLayout>
+                {!isLoading && <GridLayout images={images} limit={30} coverMode="breed" error={error}></GridLayout>}
             </div>
-        </section>
 }
 
 
