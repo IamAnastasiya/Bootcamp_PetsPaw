@@ -74,14 +74,14 @@ export async function getStaticProps(context: {params: {breedId: string}}) {
     const breedId = context.params.breedId;
 
     const imagesByBreed = await getImagesByBreed(breedId);
+    const imagesArr = imagesByBreed.slice(0, 5).map((item: {url: string}) => item.url);
 
-    if (imagesByBreed.length === 0) {
+    
+    if (!imagesByBreed.length || !imagesArr.length) {
         return {
             notFound: true
         };
     }
-
-    const imagesArr = imagesByBreed.slice(0, 5).map((item: {url: string}) => item.url);
 
     const firstImage = getIdFromImageUrl(imagesArr[0]);
     const infoDetails = await getImageDetails(firstImage);
