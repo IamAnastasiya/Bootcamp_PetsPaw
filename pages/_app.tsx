@@ -10,6 +10,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <Provider store={store}>
       <Head>
         <title>Pets Paw</title>
+        <meta name='description' content='Find the best cats pictures and give Your votes!'/>
       </Head> 
       <MainLayout>
           <Component {...pageProps} />

@@ -64,6 +64,14 @@
     border: 2px solid $pale-coral;
 }
 
+.empty-text {
+    background-color: $background-grey;
+    margin: 0;
+    padding: 18px 20px;
+    border-radius: 10px;
+    @include size-color-weight-height(16px, $dark-grey, 400, 24px);
+}
+
 @media (max-width: 1200px) {
     .image-wrapper img {
         width: 100%;

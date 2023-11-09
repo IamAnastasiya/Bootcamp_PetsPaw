@@ -98,6 +98,7 @@ const BreedsPage:React.FC<{breeds: {name: string, value: string}[]}> = (props) =
 
                 {isLoading && <div className={styles['loader-wrapper']}><LoaderSpinner /></div>}
                 {!isLoading && <GridLayout images={images} limit={30} coverMode="breed" error={error}></GridLayout>}
+                {!error && !images.length && !isLoading && <div className={styles['empty-text']}>No item found</div>}
             </div>
 }
 

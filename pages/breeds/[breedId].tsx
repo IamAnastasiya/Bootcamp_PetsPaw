@@ -23,8 +23,11 @@ const DetailPage:React.FC<{images: string[], info: BreedData}> = ({images, info}
     }, [imageNumber]);
 
 
-    const handleImageChange = (index: number) => {
+    const handleImageChange = async (index: number) => {
         setImageNumber(index);
+        const imagesByBreed = await getImagesByBreed('mala');
+        console.log(imagesByBreed);
+        const imagesArr = imagesByBreed.slice(0, 5).map((item: {url: string}) => item.url);
     }
 
     const handleLoadEvent = (): void => setIsLoading(false);
@@ -71,6 +74,13 @@ export async function getStaticProps(context: {params: {breedId: string}}) {
     const breedId = context.params.breedId;
 
     const imagesByBreed = await getImagesByBreed(breedId);
+
+    if (imagesByBreed.length === 0) {
+        return {
+            notFound: true
+        };
+    }
+
     const imagesArr = imagesByBreed.slice(0, 5).map((item: {url: string}) => item.url);
 
     const firstImage = getIdFromImageUrl(imagesArr[0]);
@@ -92,7 +102,6 @@ export async function getStaticProps(context: {params: {breedId: string}}) {
         revalidate: 3600
     }
 }
-
 
 
 export default DetailPage;
