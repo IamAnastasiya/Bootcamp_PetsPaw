@@ -110,7 +110,8 @@ export async function getStaticProps() {
     return {
         props: {
             breeds: result
-        }
+        },
+        revalidate: 3600
     }
 }
 
