@@ -71,30 +71,31 @@ export async function getStaticProps(context: {params: {breedId: string}}) {
     const breedId = context.params.breedId;
 
     const imagesByBreed = await getImagesByBreed(breedId);
-    const imagesArr = imagesByBreed.slice(0, 5).map((item: {url: string}) => item.url);
 
-    
-    if (!imagesByBreed.length || !imagesArr.length) {
+    if (!imagesByBreed.length) {
         return {
             notFound: true
         };
-    }
+    } else {
+        const imagesArr = imagesByBreed.slice(0, 5).map((item: {url: string}) => item.url);
 
-    const firstImage = getIdFromImageUrl(imagesArr[0]);
-    const infoDetails = await getImageDetails(firstImage);
+        const firstImage = getIdFromImageUrl(imagesArr[0]);
+        const infoDetails = await getImageDetails(firstImage);
 
-    return {
-        props: {
-            images: imagesArr,
-            info: {
-                id: infoDetails.breeds[0].id,
-                description: infoDetails.breeds[0].description, 
-                name: infoDetails.breeds[0].name,
-                temperament: infoDetails.breeds[0].temperament, 
-                origin: infoDetails.breeds[0].origin, 
-                weight: { metric: infoDetails.breeds[0].weight.metric },
-                life_span: infoDetails.breeds[0].life_span
-            }
+        return {
+            props: {
+                images: imagesArr,
+                info: {
+                    id: infoDetails.breeds[0].id,
+                    description: infoDetails.breeds[0].description, 
+                    name: infoDetails.breeds[0].name,
+                    temperament: infoDetails.breeds[0].temperament, 
+                    origin: infoDetails.breeds[0].origin, 
+                    weight: { metric: infoDetails.breeds[0].weight.metric },
+                    life_span: infoDetails.breeds[0].life_span
+                }
+            }, 
+            revalidate: 3600
         }
     }
 }
