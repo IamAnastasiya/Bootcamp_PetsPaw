@@ -94,8 +94,7 @@ export async function getStaticProps(context: {params: {breedId: string}}) {
                     weight: { metric: infoDetails.breeds[0].weight.metric },
                     life_span: infoDetails.breeds[0].life_span
                 }
-            }, 
-            revalidate: 3600
+            }
         }
     }
 }
