@@ -25,9 +25,6 @@ const DetailPage:React.FC<{images: string[], info: BreedData}> = ({images, info}
 
     const handleImageChange = async (index: number) => {
         setImageNumber(index);
-        const imagesByBreed = await getImagesByBreed('mala');
-        console.log(imagesByBreed);
-        const imagesArr = imagesByBreed.slice(0, 5).map((item: {url: string}) => item.url);
     }
 
     const handleLoadEvent = (): void => setIsLoading(false);
