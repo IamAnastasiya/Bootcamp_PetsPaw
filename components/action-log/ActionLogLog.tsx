@@ -1,21 +1,27 @@
 import styles from './ActionLog.module.scss';
 import Image from 'next/image';
-import {getCurrentTime, capitalize} from '../../helpers/helpers';
+import {capitalize} from '../../helpers/helpers';
 
-const VotingLog:React.FC<{id: string; action: 'add' | 'remove'; category: string}> = (props) => {
+interface VotingLogItem {
+        id: string;
+        action: 'add' | 'remove';
+        category: string;
+        time: string
+    }
 
-const actionTime = getCurrentTime();    
-const logActionText = ` was ${props.action === 'add' ? 'added to' : 'removed from'} ${capitalize(props.category)}`;
-const iconPath = `/icons/${props.category}-20-icon.svg`;
+const VotingLog:React.FC<VotingLogItem> = ({id, action, category, time}) => {
+   
+const logActionText = ` was ${action === 'add' ? 'added to' : 'removed from'} ${capitalize(category)}`;
+const iconPath = `/icons/${category}-20-icon.svg`;
 
 
 return <div className={styles['log-wrapper']}>
-        <span className={styles['log-time']}>{actionTime}</span>
-        <span className={styles['log-name']}>Image ID: <span className={styles.bold}>{props.id}</span>{logActionText}</span>
-        {props.action === 'add' && <Image 
+        <span className={styles['log-time']}>{time}</span>
+        <span className={styles['log-name']}>Image ID: <span className={styles.bold}>{id}</span>{logActionText}</span>
+        {action === 'add' && <Image 
                 className={styles.icon} 
                 src={iconPath} 
-                alt={`${props.category} icon`} 
+                alt={`${category} icon`} 
                 priority 
                 width={20} 
                 height={20} 

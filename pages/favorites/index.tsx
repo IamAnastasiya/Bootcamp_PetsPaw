@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import  { RootState }  from '../../store/index';
 import  { logsActions } from '../../store/userLogs-slice';
 import { getAllFavorites, deleteFromApiFavorites } from "@/services/favorites-api";
+import { getCurrentTime } from "@/helpers/helpers";
 
 
 const FavoritesPage:React.FC<{favorites: ImageData[], hasError: boolean}>  = (props) => {
@@ -29,7 +30,7 @@ const FavoritesPage:React.FC<{favorites: ImageData[], hasError: boolean}>  = (pr
             }
         });  
 
-        dispatch(logsActions.addToFavotitesLog({id: id, action: 'remove', category: 'favorites'}));
+        dispatch(logsActions.addToFavotitesLog({id: id, action: 'remove', category: 'favorites', time: getCurrentTime()}));
     }
 
 
@@ -52,7 +53,7 @@ const FavoritesPage:React.FC<{favorites: ImageData[], hasError: boolean}>  = (pr
 
 
                 {favoritesLog.map(info => (
-                    <ActionLog key={info.id} id={info.id} action={info.action} category={info.category}></ActionLog>
+                    <ActionLog key={info.id} id={info.id} action={info.action} category={info.category} time={info.time}></ActionLog>
                 ))}
 
             </div>

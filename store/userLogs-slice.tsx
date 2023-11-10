@@ -4,6 +4,7 @@ interface VotingLogItem {
     id: string;
     action: 'add' | 'remove';
     category: string;
+    time: string
 }
 
 interface LogsState {

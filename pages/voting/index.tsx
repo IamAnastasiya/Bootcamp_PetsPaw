@@ -13,6 +13,7 @@ import  { RootState }  from '../../store/index';
 import { useState, useEffect } from 'react';
 import  { logsActions } from '../../store/userLogs-slice';
 import Image from 'next/image'
+import { getCurrentTime } from "@/helpers/helpers";
 
 
 const VotingPage = () => {
@@ -45,7 +46,7 @@ useEffect(() => {
 
 
 const showNext = (category: string) => {
-    const newVotingLogItem = { id: pet.id, action: 'add', category: category };
+    const newVotingLogItem = { id: pet.id, action: 'add', category: category, time: getCurrentTime()};
     dispatch(logsActions.addToVotingLog(newVotingLogItem))
     setNextPet((prevState) => prevState = !prevState);
     category === 'favorite' ? setAsFavorite() : sendVote(category);
@@ -95,7 +96,7 @@ return  <div className={styles.container}>
             </div>
 
             {votingLog.map(info => (
-                <ActionLog key={info.id} id={info.id} action={info.action} category={info.category}></ActionLog>
+                <ActionLog key={info.id} id={info.id} action={info.action} category={info.category} time={info.time}></ActionLog>
             ))}
         </div>
 }
